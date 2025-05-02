@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Quiz from './components/Quiz';
+import Score from './components/Score';
+import questions from './data/questions';
 
 function App() {
+  const [score, setScore] = useState(0);
+  const [quizCompleted, setQuizCompleted] = useState(false);
+
+  const handleScoreUpdate = (newScore) => {
+    setScore(newScore);
+    setQuizCompleted(true);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Multiple-Choice Quiz App</h1>
+      {quizCompleted ? (
+        <Score score={score} totalQuestions={questions.length} />
+      ) : (
+        <Quiz questions={questions} onScoreUpdate={handleScoreUpdate} />
+      )}
     </div>
   );
 }
